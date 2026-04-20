@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You</title>
+    <style>
+        :root { --bg: #F5F5DC; --accent: #800020; --white: #fff; }
+        body { background: var(--bg); color: var(--accent); font-family: 'Segoe UI', sans-serif; margin: 0; display: grid; place-items: center; height: 100vh; overflow: hidden; }
+        .stage { width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .page { display: none; animation: slide 0.5s ease-out; }
+        .active { display: block; }
+        @keyframes slide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid var(--accent); border-radius: 8px; background: transparent; color: var(--accent); outline: none; }
+        button { background: var(--accent); color: var(--bg); border: none; padding: 12px 25px; border-radius: 20px; cursor: pointer; width: 100%; font-weight: bold; margin-top: 10px; }
+        .paper { background: var(--white); padding: 20px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-style: italic; margin: 15px 0; }
+        .letter { text-align: left; line-height: 1.5; font-size: 0.95rem; }
+        .err { color: #d00; font-size: 0.8rem; display: none; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="stage">
+    <div id="p1" class="page active">
+        <h2>Enter Code</h2>
+        <input type="password" id="pw" placeholder="******" maxlength="6" style="text-align:center; letter-spacing:8px;">
+        <div id="e1" class="err">Wrong code, try again.</div>
+        <button onclick="go(1, 2)">Unlock</button>
+    </div>
+
+    <div id="p2" class="page">
+        <div style="font-size:60px">🧸</div>
+        <h2>Happy Birthday!</h2>
+        <div class="paper">To the man who has my whole heart: you make every day feel like a gift. I love you!</div>
+        <button onclick="nav(3)">Next</button>
+    </div>
+
+    <div id="p3" class="page">
+        <h3>A Quick Quiz...</h3>
+        <select id="q1"><option value="">Who said "I love you" first?</option><option value="me">Me</option><option value="him">You</option></select>
+        <input type="text" placeholder="What gift do you want?">
+        <input type="text" placeholder="Are you happy?">
+        <div id="e2" class="err">Wait... I definitely said it first! 😉</div>
+        <button onclick="go(3, 4)">Finish</button>
+    </div>
+
+    <div id="p4" class="page">
+        <h2>My Letter</h2>
+        <div class="paper letter">
+            My Love,<br><br>
+            I wanted to write something special for you today. You are my rock and my best friend. Watching you grow and being by your side is my favorite part of life.<br><br>
+            May this year bring you all the happiness you give to me. You deserve the world.<br><br>
+            Always yours. ❤️
+        </div>
+        <button onclick="location.reload()">Reset</button>
+    </div>
+</div>
+
+<script>
+    function nav(n) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('p' + n).classList.add('active');
+    }
+
+    function go(curr, next) {
+        if (curr === 1) {
+            document.getElementById('pw').value === "220718" ? nav(next) : show('e1');
+        } else if (curr === 3) {
+            document.getElementById('q1').value === "me" ? nav(next) : show('e2');
+        }
+    }
+
+    function show(id) { document.getElementById(id).style.display = 'block'; }
+</script>
+
+</body>
+</html>
